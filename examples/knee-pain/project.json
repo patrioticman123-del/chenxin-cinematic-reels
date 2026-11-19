@@ -1,0 +1,40 @@
+{
+  "title": "膝蓋痛不一定是退化（風格測試，非正式醫學衛教影片）",
+  "topic": "膝關節疼痛的不同原因",
+  "audience": "一般民眾",
+  "message": "正確評估原因，再選擇適當處置",
+  "brand": "宸新復健科",
+  "music": null,
+  "scenes": [
+    {
+      "title": "不是所有膝蓋痛都來自退化",
+      "duration": 4.5,
+      "media": "shot_01.jpg",
+      "caption": "膝蓋痛，不一定是退化",
+      "narration": "膝蓋痛，不一定是退化。",
+      "voice": "narration_01.wav",
+      "visual_prompt": "Doctor guides patient to enormous knee joint",
+      "motion_prompt": "Walking tracking shot"
+    },
+    {
+      "title": "走進膝關節",
+      "duration": 4.5,
+      "media": "shot_02.jpg",
+      "caption": "走進膝關節，了解原因",
+      "narration": "跟著醫師走進膝關節。",
+      "voice": "narration_02.wav",
+      "visual_prompt": "Doctor walks with viewer inside giant anatomy",
+      "motion_prompt": "Natural gestures and side tracking camera"
+    },
+    {
+      "title": "先判斷再治療",
+      "duration": 4.5,
+      "media": "shot_03.jpg",
+      "caption": "找出原因，再討論治療",
+      "narration": "先找出真正原因，再選擇適合的處置。",
+      "voice": "narration_03.wav",
+      "visual_prompt": "Doctor points to anatomy then faces audience",
+      "motion_prompt": "Pointing, dolly in and close-up"
+    }
+  ]
+}
