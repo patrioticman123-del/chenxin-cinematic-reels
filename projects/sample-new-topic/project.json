@@ -1,0 +1,70 @@
+{
+  "title": "請填入本次影片標題",
+  "topic": "請填入本次主題",
+  "audience": "請填入目標觀眾",
+  "message": "請填入一個最重要的核心觀念",
+  "brand": "宸新復健科",
+  "music": null,
+  "scenes": [
+    {
+      "title": "觀眾的疑問",
+      "duration": 10,
+      "media": "media/shot_01.mp4",
+      "caption": "第1幕字幕（請修改）",
+      "narration": "第1幕旁白（請修改）",
+      "voice": null,
+      "visual_prompt": "A relatable real-world situation for the user-specified medical topic; viewer meets doctor.",
+      "motion_prompt": "Fast establishing shot, natural acting and dynamic camera"
+    },
+    {
+      "title": "進入人體世界",
+      "duration": 12,
+      "media": "media/shot_02.mp4",
+      "caption": "第2幕字幕（請修改）",
+      "narration": "第2幕旁白（請修改）",
+      "voice": null,
+      "visual_prompt": "Doctor and visitor enter an anatomically accurate enlarged 3D human structure.",
+      "motion_prompt": "Both walk naturally; tracking camera and physically plausible foot contact"
+    },
+    {
+      "title": "顯示關鍵差異",
+      "duration": 12,
+      "media": "media/shot_03.mp4",
+      "caption": "第3幕字幕（請修改）",
+      "narration": "第3幕旁白（請修改）",
+      "voice": null,
+      "visual_prompt": "Accurate detailed view of the first medically reviewed mechanism.",
+      "motion_prompt": "Doctor gestures, macro anatomy shot, controlled dolly-in"
+    },
+    {
+      "title": "進一步解釋",
+      "duration": 12,
+      "media": "media/shot_04.mp4",
+      "caption": "第4幕字幕（請修改）",
+      "narration": "第4幕旁白（請修改）",
+      "voice": null,
+      "visual_prompt": "A second mechanism or differential possibility without exaggerated claims.",
+      "motion_prompt": "Over-the-shoulder camera, rack focus, guided pointing"
+    },
+    {
+      "title": "回到正確評估",
+      "duration": 12,
+      "media": "media/shot_05.mp4",
+      "caption": "第5幕字幕（請修改）",
+      "narration": "第5幕旁白（請修改）",
+      "voice": null,
+      "visual_prompt": "Doctor explains the value of appropriate diagnostic assessment.",
+      "motion_prompt": "Walking transition, medium shot, push-in"
+    },
+    {
+      "title": "結論與品牌",
+      "duration": 14,
+      "media": "media/shot_06.mp4",
+      "caption": "正確診斷，才能選擇合適處置",
+      "narration": "先找出原因，再討論適合的處置。更多衛教知識，歡迎追蹤宸新復健科。",
+      "voice": null,
+      "visual_prompt": "Doctor faces camera in clean cinematic clinic environment; no generated text.",
+      "motion_prompt": "Confident gentle hand gesture, clean hero shot"
+    }
+  ]
+}
