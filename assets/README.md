@@ -1,6 +1,7 @@
 # 角色素材
 
-`assets/character/doctor-photo.jpg`：使用者提供的醫師肖像參考，僅在獲得其公開授權時放入。
-`assets/character/doctor-illustration.png`：基礎插畫素材（和 V4 的寫實 3D 角色樣貌不完全相同）。
+- `character/doctor-reference-thumbnail.jpg` — **已上傳**：本人授權在公開專案使用的肖像縮圖（128×192），用於辨識衣著、髮型、臉型。
+- 本人高解析原始照片（1351×2048）**尚未上傳至 GitHub**；高保真人物生成建議另外提供原始圖像。
+- 原始 V4 示範影片也尚未上傳。缺少它時可依 `docs/style-bible.md` 重建風格，不能宣稱已觀看 V4。
 
-這些二進位檔案目前需從原方案 B ZIP 補入。本專案的角色規範位於 `docs/character-bible.md`，不依賴圖片也可以產生文字分鏡，但視覺生成前應提供醫師照片以確保角色相似與一致。
+本專案沒有內建 Veo / Sora / Runway 的影片生成 API，`tools/reels.py` 僅驗證、提示詞和 FFmpeg 素材合成。真正角色走路、手勢與跟拍影片需由具備連續動態生成功能的外部服務產生。
