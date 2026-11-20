@@ -1,60 +1,53 @@
-# 宸新復健科 — Cinematic Doctor Reels Kit (方案 B)
+# 宸新復健科｜Codex × Google Flow：30 秒 Reels Skill
 
-一套**無預設疾病主題**、可反覆引用的醫療科普短影音 GitHub Skill。每次在 Codex 指定主題與文章即可產生分鏡、旁白、字幕及影片模型提示詞，取得素材後交由 FFmpeg 合成為直式 MP4。
+**通用、無預設疾病主題。** 每集由 Codex 根據使用者提供的內容產生分鏡稿、4 組 Google Flow 英文 Prompt、繁體中文旁白與字幕；使用者在 Google Flow 生成影片，下載後用 Flow Scenebuilder 或本專案 FFmpeg 合成。
 
-**影片預設：**60–90 秒（72 秒起始模板）、9:16、1080×1920、30 FPS、繁體中文、台灣中文男聲。角色是穿白袍、淺藍襯衫、深藍領帶的醫師，在巨大的人體解剖場景帶領民眾走路、指向構造，搭配電影感跟拍。
+## 正式工作流程
 
-> **請注意：** 這是 storyboard / prompt / 剪輯流程專案，不是內建 Veo 或 Sora 的一鍵 3D 影片生成器。真正人物運動必須由外部影片模型生成的連續影片提供；提供圖片的話只能做動態運鏡。醫師照片與 V4 示範素材在原始交付 ZIP 中，若未出現在 GitHub 請自行補齊；腳本與模板仍可使用。
+1. Codex 閱讀 `SKILL.md`、`docs/`、`templates/project.blank.json` 和 `prompt-templates/`。
+2. 輸入主題、衛教內容、受眾、最重要的觀念。Codex 產出四幕、影片生成提示詞、參考圖使用方案和獨立 `projects/<slug>/project.json`。
+3. 在 [Google Flow](https://labs.google/fx/tools/flow) 選 Video、9:16（portrait）、可用的 8 秒模式；在支援的模型中加入相同的醫師參考照和前一幕的保存畫格，建立**4 段各 8 秒**動態片段。
+4. 下載影片命名 `shot_01.mp4` 至 `shot_04.mp4`；**最終剪輯使用 8+8+8+6 = 30 秒**。最後一段生成 8 秒但只取前 6 秒。
+5. 預設後製另加台灣中文男聲旁白及繁體字幕，避免跨段原生語音聲線不一致。實際音檔放入 `media/` 並設定各幕 `voice`。
+6. 醫師確認解剖與醫療敘述、角色一致性、音量、成片長度再發布。
 
-## 快速開始
+**重要：** 這不是 Codex 直接連線 Flow 一鍵生成工具。Flow 的模式、片長、參考圖片與音訊依所選模型及帳戶實際功能而定；不可宣稱尚未產生的素材已完成。不要把靜態照片縮放當作真正 3D 人物行走。
 
-安裝 Python 3.10+、FFmpeg 與 ffprobe：
+## 標準設定
+- 成片 **30.0 秒**，1080×1920 目標，9:16，30 fps，繁體中文字幕。
+- 醫師：固定白袍、淺藍襯衫、深藍領帶，與參考照片相近的輕微動畫化 3D 人物。
+- Hook 約 0–8s；巨大人體結構 8–16s；醫學機制 16–24s；結論與品牌 24–30s。
+- 選模型時以 Google Flow 介面為準；若不能生成 8s，Codex 要改用該模型允許的 4/6/8s 素材排列，維持成片總長。
+
+## 每次給 Codex 的通用提示詞
+
+```text
+請閱讀本 Repository 的 SKILL.md、README.md、docs/、templates/、prompt-templates/。
+主題：【填寫】
+衛教內容／來源：【貼文章或重點】
+觀眾：【填寫】
+核心觀念：【一句話】
+先做 30 秒分鏡：4 段 Google Flow 影片素材各生成 8 秒，成片使用 8+8+8+6 秒。產生四組可以直接貼到 Google Flow 的英文提示詞、醫師照片與畫格引用說明、逐段台灣中文男聲旁白、繁體字幕、連續性及醫學驗收表。
+建立新的 projects/<slug>/project.json，不要修改通用 SKILL.md。只有已取得真實影片素材才進行 MP4 合成；不能假稱已在 Flow 完成生成。
+```
+
+## 已有媒體的合成工具
+
+安裝 Python 3.10+、FFmpeg／FFprobe 與中文字體：
 
 ```bash
 python -m pip install -r requirements.txt
 python tools/reels.py init projects/my-topic
+python tools/reels.py prompts projects/my-topic/project.json --out projects/my-topic/flow-prompts.md
+python tools/reels.py validate projects/my-topic/project.json --strict
+python tools/reels.py render projects/my-topic/project.json --out projects/my-topic/final-30s.mp4
 ```
 
-修改 `projects/my-topic/project.json`，填入本集的主題、來源、旁白、字幕、鏡頭描述和媒體路徑。
+Flow 各幕影片與旁白若尚未下載，`validate` 會報 missing media，屬正常狀況。既有 `examples/knee-pain/` 是舊長版展示，不是新版 30 秒預設。
 
-```bash
-python tools/reels.py prompts projects/my-topic/project.json --out projects/my-topic/prompts.md
-python tools/reels.py validate projects/my-topic/project.json
-python tools/reels.py render projects/my-topic/project.json --out projects/my-topic/output.mp4
-```
+## 參考
+- [Google Flow 生成影片](https://support.google.com/flow/answer/16353334)
+- [Flow 模型功能](https://support.google.com/flow/answer/16352836)
+- [Flow Scenebuilder／剪輯](https://support.google.com/flow/answer/16935718)
 
-第三步需各幕有實際媒體素材。若已有授權音檔，填入每幕 `voice`；可選擇另行安裝 `edge-tts` 生成台灣中文配音。
-
-## 每次用在 Codex 的提示詞
-
-```text
-請先閱讀本 Repository 的 SKILL.md、README.md、
-docs/style-bible.md、docs/character-bible.md 和 prompt-templates/。
-
-主題：【在這裡填】
-衛教內容或來源：【貼文章／重點／網址】
-觀眾：【在這裡填】
-最重要的觀念：【在這裡填】
-
-請依照固定醫師角色與電影感 3D 導覽風格，做 75 秒、9:16
-繁中 Reels。先輸出有秒數的分鏡、旁白、字幕、每鏡生成
-Prompt，建立獨立 projects/<slug>/project.json；取得真實
-連續動作鏡頭後合成 MP4。若無法使用影片模型，請明確
-說明，不能以靜態縮放宣稱完成真正的 3D 角色動畫。
-```
-
-## 專案目錄
-
-- `SKILL.md` — 固定角色、分鏡、醫療審核和輸出原則
-- `docs/` — 美術設計、醫師角色、分鏡和驗收清單
-- `templates/project.blank.json` — 無主題預設影片
-- `prompt-templates/` — 每次新增主題的輸入格式、影片生成、配音、封面及社群文案
-- `tools/reels.py` — 初始化、驗證、提示詞和 FFmpeg 合成
-- `tests/` — 基本驗證
-- `assets/character/` — 使用者照片與角色設定（如已提供）
-- `projects/` — 每支影片獨立資料夾
-
-原始靈感參考 [Summerhuang585/card-reels-kit](https://github.com/Summerhuang585/card-reels-kit)，但本專案獨立實作；前者是**無人物、無配音的 HTML 圖卡影片**，不是本專案的 3D 影片引擎。
-
-## 授權提醒
-公開專案並不等於第三方參考影片、音樂、真人影像都可任意再利用。避免放入未經授權素材、病患資料或 API 金鑰。
+> 公開專案可供引用，但應遵守本人肖像、患者隱私、第三方素材與台灣醫療廣告相關規範。

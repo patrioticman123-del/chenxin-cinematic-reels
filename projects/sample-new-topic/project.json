@@ -1,70 +1,62 @@
 {
-  "title": "請填入本次影片標題",
-  "topic": "請填入本次主題",
-  "audience": "請填入目標觀眾",
-  "message": "請填入一個最重要的核心觀念",
+  "title": "【本次標題】",
+  "topic": "【本次主題】",
+  "audience": "【目標觀眾】",
+  "message": "【核心觀念】",
   "brand": "宸新復健科",
+  "platform": "Google Flow",
+  "target_seconds": 30,
+  "aspect_ratio": "9:16",
+  "audio_strategy": "external_voiceover",
   "music": null,
   "scenes": [
     {
-      "title": "觀眾的疑問",
-      "duration": 10,
+      "title": "Hook — 問題與醫師入鏡",
+      "duration": 8,
+      "flow_generation_seconds": 8,
       "media": "media/shot_01.mp4",
-      "caption": "第1幕字幕（請修改）",
-      "narration": "第1幕旁白（請修改）",
+      "caption": "【第1幕字幕】",
+      "narration": "【第1幕旁白】",
       "voice": null,
-      "visual_prompt": "A relatable real-world situation for the user-specified medical topic; viewer meets doctor.",
-      "motion_prompt": "Fast establishing shot, natural acting and dynamic camera"
+      "visual_prompt": "Cinematic real-world introduction to the user-specified medical problem; the same doctor from the reference photo.",
+      "motion_prompt": "Natural entrance, human movements and swift camera push-in.",
+      "reference_guidance": "Same doctor reference photo, where the selected Flow model supports it."
     },
     {
-      "title": "進入人體世界",
-      "duration": 12,
+      "title": "走進人體內部世界",
+      "duration": 8,
+      "flow_generation_seconds": 8,
       "media": "media/shot_02.mp4",
-      "caption": "第2幕字幕（請修改）",
-      "narration": "第2幕旁白（請修改）",
+      "caption": "【第2幕字幕】",
+      "narration": "【第2幕旁白】",
       "voice": null,
-      "visual_prompt": "Doctor and visitor enter an anatomically accurate enlarged 3D human structure.",
-      "motion_prompt": "Both walk naturally; tracking camera and physically plausible foot contact"
+      "visual_prompt": "The same doctor walks with a visitor through a huge anatomically plausible structure relevant to the supplied topic.",
+      "motion_prompt": "Natural gait, real foot contact, dynamic tracking shot.",
+      "reference_guidance": "Same doctor image and prior saved frame if supported."
     },
     {
-      "title": "顯示關鍵差異",
-      "duration": 12,
+      "title": "醫學機制與核心觀念",
+      "duration": 8,
+      "flow_generation_seconds": 8,
       "media": "media/shot_03.mp4",
-      "caption": "第3幕字幕（請修改）",
-      "narration": "第3幕旁白（請修改）",
+      "caption": "【第3幕字幕】",
+      "narration": "【第3幕旁白】",
       "voice": null,
-      "visual_prompt": "Accurate detailed view of the first medically reviewed mechanism.",
-      "motion_prompt": "Doctor gestures, macro anatomy shot, controlled dolly-in"
+      "visual_prompt": "Doctor indicates a medically validated structure and explains the topic-specific mechanism.",
+      "motion_prompt": "Natural pointing and smooth macro dolly-in.",
+      "reference_guidance": "Same doctor image and prior saved frame if supported."
     },
     {
-      "title": "進一步解釋",
-      "duration": 12,
+      "title": "結論與宸新復健科",
+      "duration": 6,
+      "flow_generation_seconds": 8,
       "media": "media/shot_04.mp4",
-      "caption": "第4幕字幕（請修改）",
-      "narration": "第4幕旁白（請修改）",
+      "caption": "正確診斷，了解原因",
+      "narration": "先找出原因，再討論適合的處置。",
       "voice": null,
-      "visual_prompt": "A second mechanism or differential possibility without exaggerated claims.",
-      "motion_prompt": "Over-the-shoulder camera, rack focus, guided pointing"
-    },
-    {
-      "title": "回到正確評估",
-      "duration": 12,
-      "media": "media/shot_05.mp4",
-      "caption": "第5幕字幕（請修改）",
-      "narration": "第5幕旁白（請修改）",
-      "voice": null,
-      "visual_prompt": "Doctor explains the value of appropriate diagnostic assessment.",
-      "motion_prompt": "Walking transition, medium shot, push-in"
-    },
-    {
-      "title": "結論與品牌",
-      "duration": 14,
-      "media": "media/shot_06.mp4",
-      "caption": "正確診斷，才能選擇合適處置",
-      "narration": "先找出原因，再討論適合的處置。更多衛教知識，歡迎追蹤宸新復健科。",
-      "voice": null,
-      "visual_prompt": "Doctor faces camera in clean cinematic clinic environment; no generated text.",
-      "motion_prompt": "Confident gentle hand gesture, clean hero shot"
+      "visual_prompt": "Same doctor in a cinematic clean clinic environment, composed direct-to-camera ending. Leave clean space for brand overlay in post.",
+      "motion_prompt": "Gentle natural gesture; generate 8 seconds but trim to first 6 seconds.",
+      "reference_guidance": "Reuse doctor reference photo, add brand in post-production."
     }
   ]
 }

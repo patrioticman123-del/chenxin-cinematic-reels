@@ -1,51 +1,39 @@
-# Chenxin Cinematic Reels — Universal Production Skill
+# SKILL.md — 宸新復健科 Codex × Google Flow 30 秒醫學 Reels
 
-## Purpose
-Create reusable **60–90 second cinematic 3D-look vertical medical education videos** for 宸新復健科. This Skill does **not** contain a fixed disease topic. The user supplies a topic, sources, target audience and goal for every new episode. Read `README.md`, `docs/style-bible.md`, `docs/character-bible.md`, `docs/quality-checklist.md` and `templates/project.blank.json` before producing a video.
+## 使用範圍
+這是**無主題**通用 Skill；任何新的疾病衛教資訊由使用者提供，不得綁定膝蓋或任何範例。Codex **負責分鏡與 Google Flow prompts**，使用者在 Google Flow 產生真實連續動作影片；本專案 FFmpeg 工具負責已有素材的剪輯與字幕／聲音合成。無法存取 Flow 時不得聲稱已完成成片。
 
-## Capability boundary
-This repository generates storyboards, shot prompts, voice/subtitle plans and **assembles supplied media using FFmpeg**. It does **not** itself create photorealistic 3D footage or natural character locomotion. Real walking, hand gestures, dialogue and camera tracking require continuous video clips produced by an external video model or video editing software. Do not mislabel static image pans as native 3D motion.
+## 固定格式
+- **最終恰好 30.0 秒**，9:16，1080×1920 輸出目標，30 fps，H.264 + AAC。
+- 預設在 Flow 生成 **4 個 8 秒來源片段**；使用時長 **8 + 8 + 8 + 6 秒**。最後一段先生成 8 秒、只剪用 6 秒；若模型不支援 8 秒則依介面可用片長重新拆分。
+- 繁體中文字幕，台灣中文男聲配音。預設**後製旁白**，Flow 只生成場景／動作與可選環境音，不直接做多段對嘴；若要求 Flow 原生語音，需先確認模型支援並逐段檢查。
+- 字幕、中文文字、Logo 不能由 Flow 畫進場景，後製加入。
 
-## Fixed format and brand
-- 9:16 vertical, target 1080×1920, 30 fps, H.264 MP4 with AAC audio
-- Runtime 60–90 seconds, default 72–75 seconds
-- Traditional Chinese subtitles and natural Taiwanese Mandarin male narration (user-recorded or licensed synthetic)
-- Brand: 宸新復健科
-- End with accurate takeaways and neutral educational CTA
+## 固定醫師與鏡頭
+讀取 `docs/character-bible.md`、`docs/style-bible.md`，使用授權醫師照片（`assets/character/doctor-photo.jpg` 若有，或目前低解析縮圖 `doctor-reference-thumbnail.jpg`）。短黑髮、親切年輕東亞男性、白袍、淺藍襯衫、深藍斜紋領帶、深色長褲。寫實 3D 電影感、五官稍動畫化且維持同一人。醫師帶觀眾進入巨大人體結構，真實行走、抬手指向組織、轉身、鏡頭跟拍；不使用外星人。每個新鏡頭重用同一張人物參考照，若 Flow 支援可加前幕保存的畫格作銜接。
 
-## Doctor identity
-Use the supplied physician photo **only when reference media is present and authorized**. Young East Asian man with short neat black hair, warm expression, white coat, pale blue shirt, navy striped tie, dark trousers. Face should resemble the actual physician while slightly stylized in believable 3D. Preserve consistent face, wardrobe and age across every shot. No alien guide.
+## 四段預設結構
+| Flow 來源 | 成片時間 | 使用秒數 | 用途 |
+|---|---|---:|---|
+| shot_01.mp4 (生成 8s) | 0–8s | 8 | 問題 Hook／醫師入場 |
+| shot_02.mp4 (生成 8s) | 8–16s | 8 | 走入巨大人體世界 |
+| shot_03.mp4 (生成 8s) | 16–24s | 8 | 單一核心機制／解剖說明 |
+| shot_04.mp4 (生成 8s) | 24–30s | **6** | 診斷觀念＋品牌結尾 |
 
-## Cinematic language
-A physician guides a visitor through an oversized, anatomically informed miniature-body environment. Show purposeful **walking, turning, pointing, speaking**, interacting with the guest. Track with moving camera, use dolly and macro close-ups, warm rim lighting, physical depth of field. 2–4 second shots for Reels pacing, with occasional breathing room. Do not bake Chinese text into AI video clips: composite subtitles after generation.
+單片內容盡量只教一件事，最多 2–3 個衛教重點；時間不夠就減少知識，不為湊秒數編造細節。
 
-## Narrative progression
-1. Hook (0–10s): relevant curiosity / misconception, with caveats.
-2. Transition (10–25s): enter the giant anatomical environment.
-3. Main mechanism (25–55s): 2–3 grounded explanations demonstrated visually.
-4. Clinical reasoning (55–70s): avoid overclaiming, show diagnostic context.
-5. Takeaway / CTA (70–80s or adjusted runtime): summarize, brand.
+## Codex 每集必交
+1. 一句話主旨、目標觀眾、醫學證據和不確定性。
+2. 30 秒時間碼分鏡（可在 8 秒片段內有小動作變化）。
+3. **4 組完整可貼入 Google Flow 的英文 Prompt**：人物、鏡頭、動作、環境光影、真實解剖、時長、負面限制、鏡頭起迄姿勢。
+4. 參考圖清單：每幕同一醫師照片、可用前一幕畫格；若 Flow 模型不支援 Ingredients 或 Frames，要提供替代操作方式。
+5. 繁中旁白稿、逐幕字幕與 SRT；配音能在 30 秒內播完，最後一幕只有 6 秒。
+6. 依 `templates/project.blank.json` 建立新的 `projects/<slug>/project.json`；用 `tools/reels.py prompts` 產生 Flow 分段提示詞。
+7. 可用媒體已備齊時執行 validate、render；否則交付分鏡／Prompts，不得把靜態縮放當作真 3D 動畫。
+8. 最後依 `docs/quality-checklist.md` 檢查醫學正確性、角色一致性、畫質、字幕與音訊。
 
-## Required process
-1. Read the user-provided material and preserve uncertainty, not invent evidence.
-2. Build 6–12 timed shots with narration, subtitles, actions and camera movement.
-3. Create `projects/<topic-slug>/project.json` based on `templates/project.blank.json`.
-4. Produce per-shot prompts with `python tools/reels.py prompts <project.json>`.
-5. Obtain rights-cleared **continuous motion** video clips and narration.
-6. Set `media` and `voice` paths for each shot and validate the project.
-7. Render with `python tools/reels.py render <project.json> --out <output.mp4>`.
-8. Review captions, synchronization, identity continuity, body mechanics and medical accuracy before publication.
+## Google Flow 使用注意
+Flow 官方依模型提供 Text / Frames / Ingredients 等影片模式，且片長、參考圖、原生語音及延長能力不同。不要假定每個功能都對所有模型或帳戶可用；選擇 Video / Portrait 9:16 / 支援的 8s 模式，若可用則先上傳醫師照片作 Ingredient，後段重複使用並加入先前保存的畫格。Flow Scenebuilder 可以排順序與裁剪，但仍要檢查最終長度。
 
-## Medical safeguards
-- Explain *可能*, *不一定*, *部分情況* as clinically indicated.
-- Do not fabricate research, treatment effects or diagnostic certainty.
-- No false cures, comparison of staged before/after outcomes or pressure to buy.
-- Keep patient materials out without explicit consent.
-- Clinician must review every anatomical rendering and health claim.
-- Review medical advertising compliance before posting in Taiwan.
-
-## Deliverables
-Per topic: source notes, `project.json`, storyboard, prompt sheet, narration, captions, media manifest, render output, QC result. Clearly state which requested portions are finished and which depend on an external model.
-
-## Tools
-Python 3.10+, FFmpeg/FFprobe, Pillow. Optional edge-tts with online access and appropriate terms. Never commit keys or clinical private data. Existing style references are not an implied license to redistribute third-party videos.
+## 醫學要求
+保留「可能、不一定、因人而異」；沒有證據就不要填入精確醫療結論。解剖關係、檢查與療效聲稱需由醫師確認。勿使用無授權患者資料、背景音樂或第三方內容。發布前確認台灣醫療廣告相關規範。

@@ -27,9 +27,14 @@ def validate(data,base,strict=False):
         voice=path(base,s.get("voice"))
         if voice and not voice.is_file():errors.append(f"scene {i}: voice missing")
         if len(s.get("caption",""))>38:warnings.append(f"scene {i}: caption long")
-    if not 60<=total<=90:
-        warnings.append(f"runtime {total:g}s outside 60–90s")
-        if strict:errors.append("runtime out of range")
+    if abs(total-30)>0.05:
+        warnings.append(f"runtime {total:g}s differs from required 30s")
+        if strict:errors.append("runtime must equal 30s")
+    if data.get("platform")=="Google Flow":
+        for i,s in enumerate(scenes,1):
+            gen=s.get("flow_generation_seconds")
+            if gen is None:warnings.append(f"scene {i}: missing flow_generation_seconds")
+            elif gen<s.get("duration",0):errors.append(f"scene {i}: generation shorter than edited duration")
     music=path(base,data.get("music"))
     if music and not music.is_file():errors.append("music missing")
     return errors,warnings
@@ -54,7 +59,7 @@ def caption_image(text,out):
 def make_prompts(data,out):
     lines=[f"# {data.get('title',data.get('topic','New Reels'))}","", "Cinematic realistic 3D; consistent doctor identity; natural walking, pointing and tracking shots. Do not generate Chinese text in video.",""]
     for i,s in enumerate(data["scenes"],1):
-        lines.extend([f"## Shot {i:02} ({s['duration']}s)",f"Scene: {s.get('title','')}",f"Visual: {s.get('visual_prompt','')}",f"Motion: {s.get('motion_prompt','')}",f"Voice: {s.get('narration','')}",f"Caption: {s.get('caption','')}",""])
+        lines.extend([f"## Flow Shot {i:02} (generate {s.get('flow_generation_seconds',8)}s; edit uses {s['duration']}s)",f"Scene: {s.get('title','')}",f"Visual: {s.get('visual_prompt','')}",f"Motion: {s.get('motion_prompt','')}",f"References: {s.get('reference_guidance','Reuse same doctor image and previous saved frame when supported')}",f"Voice: {s.get('narration','')}",f"Caption: {s.get('caption','')}",""])
     Path(out).parent.mkdir(parents=True,exist_ok=True)
     Path(out).write_text("\n".join(lines),encoding="utf-8")
 def render(data,base,out):
